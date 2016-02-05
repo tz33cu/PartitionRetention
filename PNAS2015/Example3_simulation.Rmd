@@ -1,5 +1,5 @@
 ---
-title: "LZHL (2015) PNAS Example 3"
+title: "LZCL (2015) PNAS Example 3"
 author: "Tian Zheng"
 date: "February 4, 2016"
 output: pdf_document
