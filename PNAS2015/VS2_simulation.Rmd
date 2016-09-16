@@ -1,0 +1,110 @@
+---
+title: Simple examples simulation from 'Why significant variables aren't automatically
+  good predictors.' (2015)
+output:
+  html_document: default
+  html_notebook: default
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+### Set up the variabile sets
+```{r}
+vs2.a=matrix(rep(c(50, 61), 9), 2, 9, byrow=T)/999
+vs2.b=matrix(c(c(5, 26), rep(67, 7), c(26, 5), rep(67, 7)), 
+                2, 9, byrow=T)/1000
+options(digits = 2)
+vs2.a
+rowSums(vs2.a)
+vs2.b
+rowSums(vs2.b)
+```
+### Normalizing step
+```{r}
+vs2.a[1,]=vs2.a[1,]/sum(vs2.a[1,])
+vs2.a[2,]=vs2.a[2,]/sum(vs2.a[2,])
+vs2.b[1,]=vs2.b[1,]/sum(vs2.b[1,])
+vs2.b[2,]=vs2.b[2,]/sum(vs2.b[2,])
+vs2.a
+rowSums(vs2.a)
+vs2.b
+rowSums(vs2.b)
+```
+### Bayes rate
+#### Variable set 1
+```{r}
+sum(pmax(vs2.a[1,], vs2.a[2,]))/2
+```
+#### Variable set 2
+```{r}
+sum(pmax(vs2.b[1,], vs2.b[2,]))/2
+```
+
+### Running the simulation
+
+```{r}
+BB=10000
+
+chi2.a=rep(0, BB)
+chi2.b=rep(0, BB)
+I2.a=rep(0, BB)
+I2.b=rep(0, BB)
+
+for(i in 1:BB){
+    
+    tab.a =cbind(rmultinom(1, 500, vs2.a[1,]), 
+                 rmultinom(1, 500, vs2.a[2,]))
+
+    tab.b =cbind(rmultinom(1, 500, vs2.b[1,]), 
+                 rmultinom(1, 500, vs2.b[2,]))
+
+    chi2.a[i]=chisq.test(tab.a)$p.value
+    chi2.b[i]=chisq.test(tab.b)$p.value
+    
+    I2.a[i]=500*sum((tab.a[,1]/500-tab.a[,2]/500)^2)/2
+    I2.b[i]=500*sum((tab.b[,1]/500-tab.b[,2]/500)^2)/2
+
+
+}
+```
+
+#### Simulations results
+
+#### Median I scores
+```{r}
+options(digits=3)
+median(I2.a)
+median(I2.b)
+```
+
+#### Median p-value
+```{r}
+options(digits=3)
+median(chi2.a)
+median(chi2.b)
+```
+
+
+```{r}
+par(mfrow=c(1,1), mar=c(4.5,4,1,1), font.main=1, cex.main=1)                    
+
+hist(-log(chi2.a)/log(10), breaks=30, freq=F, 
+     #density=6, lwd=1.5,  
+     col="light blue", 
+     border=0, 
+     xlim=c(0,12), main="", 
+     xlab="", ylab="", xaxt="n")  
+ticks <- seq(1, 12, by=1)
+labels <- sapply(ticks, function(i) as.expression(bquote(10^ .(-i))))
+axis(1, at=1:12, labels=labels)
+
+#abline(v=qchisq(1-0.01, 2), lwd=2)
+hist(-log(chi2.b)/log(10), breaks=40, freq=F, density=12, lwd=2, angle=-45, 
+col=rgb(1,0,0), 
+xlim=c(0,7), main="", 
+     xlab="",ylab="", 
+     add=T
+     )
+#abline(v=qchisq(1-0.01, 2), lwd=2)
+legend(8, 0.4, c("Predictive VS", "Significant VS"), fill=c("light blue", "red"), border=c("light blue", "red"), density=c(-1, 20), angle=c(0, -45), bty="n")
+```
