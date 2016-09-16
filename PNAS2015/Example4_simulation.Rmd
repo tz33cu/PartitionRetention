@@ -1,10 +1,10 @@
 ---
-title: "LZCL (2015) PNAS Example 3"
+title: "LZCL (2015) PNAS Example 4"
 author: "Tian Zheng"
 date: "February 4, 2016"
 output: pdf_document
 ---
-This is an R Markdown document to illustrate the simulation of example 3 used in Lo et al (2015) "Why aren't significant variables automatically good predictors." appeared in PNAS.
+This is an R Markdown document to illustrate the simulation of example 4 used in Lo et al (2015) "Why aren't significant variables automatically good predictors." appeared in PNAS.
 
 ## Calculating I score
 For real data, we usually use the following functions for evaluating I score on a selected variable set with or without screening. For the simulation, we used array and matrix operator to speed things up a little bit. 
