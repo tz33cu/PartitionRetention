@@ -5,5 +5,5 @@ Lo, A., T. Zheng, H., Chernoff and S.-H. Lo (2015)
 
 Simulation details [Rmarkdown]
 
-+ (VS2_simulation.Rmd)=>[html](https://rawgit.com/tz33cu/PartitionRetention/master/PNAS2015/VS2_simulation.html)
++ (VS2_simulation.Rmd)=>[PDF](https://github.com/tz33cu/PartitionRetention/blob/master/PNAS2015/VS2_simulation.pdf)
 + (Example4_simulation.Rmd)=>[PDF](Example4_simulation.pdf)
