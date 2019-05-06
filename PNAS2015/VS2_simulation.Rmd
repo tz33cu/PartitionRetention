@@ -2,8 +2,9 @@
 title: Simple examples simulation from 'Why significant variables aren't automatically
   good predictors.' (2015)
 output:
-  html_document: default
+  pdf_document: default
   html_notebook: default
+  html_document: default
 ---
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
